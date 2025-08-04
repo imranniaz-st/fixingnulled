@@ -15,6 +15,7 @@ class HomeController extends Controller
         if (site('homepage')) {
             return redirect()->away(site('homepage'));
         }
+        dd('Welcome to the homepage!');
 
         return view(template('pages.index'));
     }

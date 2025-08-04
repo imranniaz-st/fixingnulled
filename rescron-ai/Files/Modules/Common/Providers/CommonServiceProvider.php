@@ -31,7 +31,7 @@ class CommonServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         //$router->aliasMiddleware('web', \Modules\Common\Http\Middleware\CommonMiddleware::class);
         $router->pushMiddlewareToGroup('web', \Modules\Common\Http\Middleware\CommonMiddleware::class);
-        dd('Common Service Provider Booted');
+        // dd('Common Service Provider Booted');
     }
 
     /**

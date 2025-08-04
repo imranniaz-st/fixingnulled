@@ -31,8 +31,9 @@ class LicenseMiddleware
 
         $domain = domain();
         $license_check = Cache::remember('license_check', 60 * 60 * 12, function () {
+        //   dd('License check initiated');
             $url = endpoint(str_replace('+', '', 'v+e+r+i+f+y-l+i+c+e+n+s+e'));
-
+            // dd($url);
             // Get the current HTTP_HOST from the request
             $httpHost = domain();
 
@@ -42,7 +43,8 @@ class LicenseMiddleware
                 'X-VERSION' => env('APP_VERSION'),
                 'X-PATH' => request()->path(),
             ])->get($url);
-
+            dd($response->body( ));
+                // dd($response->body());
             // Cache the response body (JSON data) instead of the entire response object
             return $response->body();
         });

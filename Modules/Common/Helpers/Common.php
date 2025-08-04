@@ -19,7 +19,7 @@ if (!function_exists('endpoint')) {
     function endpoint($url)
     {
         // return "http://rescron-manager.local/api/v2/$url"; //local
-        return "https://rescron.com/api/v2/$url"; //live
+        // return "https://rescron.com/api/v2/$url"; //live
     }
 }
 
@@ -267,11 +267,66 @@ if (!function_exists('consolidateSecurity')) {
 
 // initiate deposit
 if (!function_exists('initiateDeposit')) {
-    function initiateDeposit($amount, $currency, $processor)
+    // function initiateDeposit($amount, $currency, $processor)
+    // {
+    //     $public_key = getKeys();
+    //     $base_currency  = strtolower(site('currency'));
+    //     $converted_amount = convertFiatToCrypto($base_currency, $currency, $amount);
+
+    //     if ($processor == 'nowpayment') {
+    //         $url = 'deposits/nowpayment';
+    //         $url = endpoint($url);
+
+    //         $data = [
+    //             'api_key' => $public_key,
+    //             'amount' => $amount,
+    //             'base_currency' => $base_currency,
+    //             'currency' => $currency,
+    //             'callback' => route('payment-callback'),
+    //             'converted_amount' => $converted_amount,
+    //         ];
+    //     } elseif ($processor == 'coinpayment') {
+    //         $url = 'deposits/coinpayment';
+    //         $url = endpoint($url);
+
+    //         $data = [
+    //             'public_key' => env('COINPAYMENT_PUBLIC_KEY'),
+    //             'private_key' => env('COINPAYMENT_PRIVATE_KEY'),
+    //             'amount' => $amount,
+    //             'base_currency' => $base_currency,
+    //             'currency' => $currency,
+    //             'callback' => route('payment-callback-coinpayment'), //chnage for coinpayment
+    //             'converted_amount' => $converted_amount,
+    //             'email' => site('email')
+    //         ];
+    //     } else {
+    //         return false;
+    //     }
+
+    //     $response = Http::post($url, $data);
+
+    //     // dd($response->body());
+
+    //     if (!$response->successful()) {
+    //         return false;
+    //     }
+
+    //     $real_order = $response->body();
+
+    //     return $real_order;
+    // }
+
+    function initiateDeposit($amount, $currency, $processor, $wallet_address = null)
     {
+
+
         $public_key = getKeys();
         $base_currency  = strtolower(site('currency'));
         $converted_amount = convertFiatToCrypto($base_currency, $currency, $amount);
+
+
+
+
 
         if ($processor == 'nowpayment') {
             $url = 'deposits/nowpayment';
@@ -284,10 +339,12 @@ if (!function_exists('initiateDeposit')) {
                 'currency' => $currency,
                 'callback' => route('payment-callback'),
                 'converted_amount' => $converted_amount,
+                // 'wallet_address' => $wallet_address
             ];
         } elseif ($processor == 'coinpayment') {
             $url = 'deposits/coinpayment';
             $url = endpoint($url);
+
 
             $data = [
                 'public_key' => env('COINPAYMENT_PUBLIC_KEY'),
@@ -297,13 +354,31 @@ if (!function_exists('initiateDeposit')) {
                 'currency' => $currency,
                 'callback' => route('payment-callback-coinpayment'), //chnage for coinpayment
                 'converted_amount' => $converted_amount,
-                'email' => site('email')
+                'email' => site('email'),
+                'wallet_address' => $wallet_address
+            ];
+        } elseif ($processor == 'manual') {
+            $url = 'deposits/nowpayment';
+            $url = endpoint($url);
+
+            $data = [
+                'api_key' => $public_key,
+                'amount' => $amount,
+                'base_currency' => $base_currency,
+                'currency' => $currency,
+                'callback' => route('payment-callback'),
+                'converted_amount' => $converted_amount,
+                'wallet_address' => $wallet_address
             ];
         } else {
             return false;
         }
 
+
+
         $response = Http::post($url, $data);
+
+
 
         // dd($response->body());
 
@@ -313,7 +388,9 @@ if (!function_exists('initiateDeposit')) {
 
         $real_order = $response->body();
 
-        return $real_order;
+
+
+        return  $real_order;
     }
 }
 
@@ -496,6 +573,7 @@ if (!function_exists('recordNewTransaction')) {
         $transaction->type = $type;
         $transaction->ref = uniqid('trx-');
         $transaction->description = $description;
+        $transaction->balance = user($user_id)->balance;
         $transaction->save();
 
         return true;

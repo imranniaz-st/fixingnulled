@@ -8,6 +8,7 @@
         "php": "^8.2",
         "barryvdh/laravel-debugbar": "^3.8",
         "biscolab/laravel-recaptcha": "^6.1",
+        "google/recaptcha": "*",
         "guzzlehttp/guzzle": "^7.2",
         "irazasyed/telegram-bot-sdk": "^3.13",
         "laravel/framework": "^11.0",
@@ -35,7 +36,7 @@
             "Modules\\": "Modules/"
         },
         "files": [
-            "vendor/spotier/src/neo.php"
+            
         ]
     },
     "autoload-dev": {

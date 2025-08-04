@@ -184,34 +184,7 @@ $(document).on('click', '.rescron-card-trigger', function (e) {
 });
 
 // update count down
-function updateCountdown(targetId, targetDateString) {
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-        const targetDate = new Date(targetDateString);
-
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        // Calculate days, hours, minutes, and seconds
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the remaining time in the "countdown" div
-        document.getElementById(targetId).innerHTML =
-            `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-
-        // If the countdown is over, display a message
-        if (distance < 0) {
-            clearInterval(interval);
-            document.getElementById(targetId).innerHTML =
-                '<span class="text-red-500">expired</span>';
-        }
-    }
-
-}
-
+ 
 
 // load page via ajax
 function loadPage(link, clicked, targetDiv) {

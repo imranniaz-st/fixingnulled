@@ -30,7 +30,7 @@ class CommonServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         //$router->aliasMiddleware('web', \Modules\Common\Http\Middleware\CommonMiddleware::class);
-        $router->pushMiddlewareToGroup('web', \Modules\Common\Http\Middleware\CommonMiddleware::class);
+        // $router->pushMiddlewareToGroup('web', \Modules\Common\Http\Middleware\CommonMiddleware::class);
     }
 
     /**

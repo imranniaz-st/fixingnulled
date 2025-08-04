@@ -1,7 +1,7 @@
 
 // update count down
  
-}
+ 
 
 function toastNotify(type, message) {
   Swal.fire({

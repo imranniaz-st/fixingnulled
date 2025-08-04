@@ -41,7 +41,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\TradeDataBinder::class,
-            \App\Http\Middleware\LicenseMiddleware::class,
+            // \App\Http\Middleware\LicenseMiddleware::class,
             
         ],
 

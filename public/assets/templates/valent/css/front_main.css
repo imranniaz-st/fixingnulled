@@ -1,0 +1,98 @@
+*{font-family: 'Noto Sans';}
+body{
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+}
+
+[x-cloak] {
+  display: none;
+}
+
+
+/*******/
+/* Custom Scrollbar Styles */
+.overflow-auto::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: #306FE6;
+  border-radius: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+  background: #306FE6;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px; /* Adjust scrollbar width */
+  }
+
+  ::-webkit-scrollbar-thumb {
+  background: #306FE6; /* Scrollbar color */
+  border-radius: 5px; /* Rounded corners */
+  }
+
+  ::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+  }
+
+/* Styles for tablets */
+@media screen and (min-width: 600px) {
+  .animate_card{
+    display: block;
+  }
+}
+
+/* Styles for desktops */
+@media screen and (min-width: 1024px) {
+  .animate_card {
+    display: grid;
+    place-items: center;
+    position: relative;
+    background-color: #031A45;
+    height: 62px;
+    width: 13rem;
+    border-radius: 9999px;
+  }
+  
+  .animate_card::before {
+    position: absolute;
+    content: "";
+    background: linear-gradient(45deg, #3F7DF2, #FFFFFF, #09C241);
+    z-index: -1;
+    transition: 0.3s;
+    animation: animate 2s linear infinite;
+    height: 62px;
+    width: 13rem;
+    border-radius: 9999px;
+  }
+  
+  .animate_card:hover::before {
+    height: 64px;
+    width: 13.5rem;
+    color: linear-gradient(45deg, #3F7DF2, #FFFFFF, #09C241);
+  }
+  
+  @keyframes animate {
+    50% {
+      filter: rota hue-rotate(350deg);
+    }
+  }
+  
+}

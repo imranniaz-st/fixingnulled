@@ -1,18 +1,37 @@
 #!/bin/bash
 
-EXT="pdo_mysql"
 PHP_VERSION="8.3"
-PHP_CONF_DIR="/etc/php/$PHP_VERSION/cli"
-EXT_PATH=$(find /usr/lib/php/ -name ${EXT}.so 2>/dev/null)
+INI_PATH="/etc/php/$PHP_VERSION/cli/php.ini"
 
-echo "🔍 Scanning for $EXT in PHP $PHP_VERSION config files..."
+# Optional: Detect fpm or apache2 if needed
+[ -f "/etc/php/$PHP_VERSION/fpm/php.ini" ] && INI_PATH_FPM="/etc/php/$PHP_VERSION/fpm/php.ini"
 
-echo -e "\n📁 Config Files Where '$EXT' is Declared:"
-grep -i "$EXT" "$PHP_CONF_DIR/php.ini" "$PHP_CONF_DIR/conf.d/"*.ini 2>/dev/null || echo "❌ Not declared."
+echo "🔧 Updating PHP settings in: $INI_PATH"
 
-echo -e "\n📦 Checking .so file for $EXT:"
-if [[ -n "$EXT_PATH" ]]; then
-    echo "✅ Found: $EXT_PATH"
-else
-    echo "❌ $EXT.so not found in /usr/lib/php — probably not installed"
+# Backup
+sudo cp "$INI_PATH" "$INI_PATH.bak"
+
+# Update values in CLI php.ini
+sudo sed -i 's/^upload_max_filesize.*/upload_max_filesize = 500M/' "$INI_PATH"
+sudo sed -i 's/^max_execution_time.*/max_execution_time = 5000/' "$INI_PATH"
+sudo sed -i 's/^max_input_time.*/max_input_time = 5000/' "$INI_PATH"
+sudo sed -i 's/^memory_limit.*/memory_limit = 500M/' "$INI_PATH"
+
+# If FPM exists, also apply there
+if [ -n "$INI_PATH_FPM" ]; then
+  echo "🔧 Also updating PHP-FPM: $INI_PATH_FPM"
+  sudo cp "$INI_PATH_FPM" "$INI_PATH_FPM.bak"
+  sudo sed -i 's/^upload_max_filesize.*/upload_max_filesize = 500M/' "$INI_PATH_FPM"
+  sudo sed -i 's/^max_execution_time.*/max_execution_time = 5000/' "$INI_PATH_FPM"
+  sudo sed -i 's/^max_input_time.*/max_input_time = 5000/' "$INI_PATH_FPM"
+  sudo sed -i 's/^memory_limit.*/memory_limit = 500M/' "$INI_PATH_FPM"
+fi
+
+echo "✅ Done. Values updated."
+echo "📁 Backup created: $INI_PATH.bak"
+
+# Optional: restart services if needed
+if [ -n "$INI_PATH_FPM" ]; then
+  echo "🔄 Restarting PHP-FPM..."
+  sudo service php$PHP_VERSION-fpm restart
 fi

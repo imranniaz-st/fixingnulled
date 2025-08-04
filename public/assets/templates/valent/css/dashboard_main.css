@@ -1,0 +1,101 @@
+* {
+    font-family: "Noto Sans";
+}
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+li:hover .icon {
+    fill-opacity: 1; /* Change to desired opacity */
+}
+.active {
+    color: #ffffff !important;
+    fill-opacity: 1 !important;
+}
+
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+[x-cloak] {
+    display: none;
+}
+
+/*transition for slide forms*/
+.slide-right-to-left {
+    transform: translateX(200%);
+    transition: transform 0.5s ease-in-out;
+}
+/* Move the element into the view */
+.slide-in {
+    transform: translateX(0);
+    transition: transform 0.5s ease-in;
+}
+
+/*******/
+/* Custom Scrollbar Styles */
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #306fe6;
+    border-radius: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #306fe6;
+}
+
+/* Custom Scrollbar Styles browser */
+::-webkit-scrollbar {
+    width: 10px; /* Adjust scrollbar width */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #306fe6; /* Scrollbar color */
+    border-radius: 5px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Scrollbar track color */
+}
+
+/* .custom-select {
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    outline: none;
+  } */
+
+/* Change background color when focused */
+/* .custom-select:focus {
+    background-color: blue;
+    color: white;
+  } */
+
+/* Style the dropdown options */
+.custom-select option {
+    background-color: white;
+    color: black;
+}
+
+/* change date picker icon color */
+input[type="date"] {
+    color-scheme: dark;
+    color: white;
+    border: 0px solid white;
+}

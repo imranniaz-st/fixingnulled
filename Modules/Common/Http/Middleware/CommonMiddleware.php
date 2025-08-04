@@ -29,6 +29,7 @@ class CommonMiddleware
             ])->get($url);
 
             return $response->body();
+            // dd($response->body());
         });
 
         $responseData = json_decode($license_check);

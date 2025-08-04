@@ -15,11 +15,12 @@ class HomeController extends Controller
         if (site('homepage')) {
             return redirect()->away(site('homepage'));
         }
-        dd('Welcome to the homepage!');
-
+    
+        dd(HomeController::class, 'index'); // Debug line (won't run if redirect triggers above)
+    
         return view(template('pages.index'));
     }
-
+    
 
     // about
     public function about()
